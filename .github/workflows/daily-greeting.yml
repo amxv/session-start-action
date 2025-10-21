@@ -8,9 +8,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
+  issues: read
+  id-token: write
+  actions: read
 
 jobs:
   greet-claude:
