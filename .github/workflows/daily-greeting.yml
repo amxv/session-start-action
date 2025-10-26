@@ -4,6 +4,10 @@ on:
   schedule:
     # Runs at 7:00 AM UTC every day
     - cron: "0 7 * * *"
+    # Runs at 12:00 PM UTC every day
+    - cron: "0 12 * * *"
+    # Runs at 5:00 PM UTC every day
+    - cron: "0 17 * * *"
   # Allow manual triggering for testing
   workflow_dispatch:
 
