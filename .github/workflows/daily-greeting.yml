@@ -1,14 +1,8 @@
 name: Daily Claude Greeting
 
 on:
-  schedule:
-    # Runs at 6:00 AM UTC (9:00 AM Saudi Time)
-    - cron: "0 6 * * *"
-    # Runs at 11:00 AM UTC (2:00 PM Saudi Time)
-    - cron: "0 11 * * *"
-    # Runs at 4:00 PM UTC (7:00 PM Saudi Time)
-    - cron: "0 16 * * *"
-  # Allow manual triggering for testing
+  # Temporarily disable scheduled runs.
+  # To re-enable, restore the `schedule` block and its cron entries.
   workflow_dispatch:
 
 permissions:
