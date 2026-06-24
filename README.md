@@ -24,11 +24,16 @@ That is the point: you can move the session window earlier in the day so the res
 From the repo root, run:
 
 ```bash
-CLAUDE_CODE_OAUTH_TOKEN="$(claude setup-token)"
-gh secret set CLAUDE_CODE_OAUTH_TOKEN --body "$CLAUDE_CODE_OAUTH_TOKEN"
+claude setup-token
 ```
 
-`claude setup-token` prints the token to your terminal. `gh secret set` stores it in the current repository.
+Copy the token that `claude setup-token` prints, then run:
+
+```bash
+gh secret set CLAUDE_CODE_OAUTH_TOKEN
+```
+
+Paste the token when `gh` prompts you. That stores it in the current repository.
 
 ### Codex
 
