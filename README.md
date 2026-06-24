@@ -5,7 +5,7 @@ GitHub Actions workflows for starting Claude Code or Codex sessions on a schedul
 ## What this repo does
 
 - `Claude Session Start` sends a short prompt through Claude Code using your Claude OAuth token.
-- `Codex Session Start` sends the same kind of prompt through Codex using an OAuth-backed `auth.json` secret.
+- `Codex Session Start` sends the same kind of prompt through Codex using a base64-encoded `auth.json` secret.
 - Both workflows can also be run manually from the GitHub Actions tab.
 - Both workflows run every 5 hours by default. GitHub cron schedules use UTC.
 
@@ -17,39 +17,32 @@ Create a repository secret named `CLAUDE_CODE_OAUTH_TOKEN` and paste in your aut
 
 ### Codex
 
-Create a repository secret named `CODEX_CONFIG_B64` and store a base64-encoded Codex `auth.json` file there.
+Create a repository secret named `CODEX_CONFIG_B64` and store a base64-encoded copy of your Codex `auth.json` there.
 
 To generate that Codex secret:
 
-1. Pull the Codex Docker image used by the reference action:
+1. Find the auth file in your Codex home directory:
 
    ```bash
-   docker pull ghcr.io/icoretech/codex-docker:0.142.0
+   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
+   ls "$CODEX_AUTH_DIR/auth.json"
    ```
 
-2. Run the device-auth flow and let it write credentials into a local `.codex/` directory:
-
-   ```bash
-   mkdir -p .codex
-   docker run --rm -it \
-     -v "$PWD/.codex:/home/codex/.codex" \
-     ghcr.io/icoretech/codex-docker:0.142.0 \
-     codex-bootstrap device-auth
-   ```
-
-3. Confirm that `.codex/auth.json` exists.
-
-4. Base64-encode the file:
+2. Base64-encode the file:
 
    ```bash
    # Linux
-   base64 -w0 .codex/auth.json
+   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
+   base64 -w0 "$CODEX_AUTH_DIR/auth.json"
 
    # macOS
-   base64 -i .codex/auth.json
+   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
+   base64 -i "$CODEX_AUTH_DIR/auth.json"
    ```
 
-5. Save the encoded output as the `CODEX_CONFIG_B64` secret.
+3. Save the encoded output as the `CODEX_CONFIG_B64` secret.
+
+If `CODEX_HOME` is not set, Codex normally keeps `auth.json` under `~/.codex/auth.json`, which is the fallback path used above.
 
 ## Workflow files
 
