@@ -1,0 +1,24 @@
+name: Codex Session Start
+
+on:
+  schedule:
+    - cron: "0 */5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  greet-codex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Start Codex session
+        uses: icoretech/codex-action@v0
+        with:
+          prompt: "hi"
+          codex_config: ${{ secrets.CODEX_CONFIG_B64 }}
+          sandbox: danger-full-access
+          timeout: "60"

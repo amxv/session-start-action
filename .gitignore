@@ -25,3 +25,6 @@ yarn-error.log*
 dist/
 build/
 *.log
+
+# Local reference checkouts and scratch space
+tmp/
