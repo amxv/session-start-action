@@ -9,6 +9,16 @@ GitHub Actions workflows for starting Claude Code or Codex sessions on a schedul
 - Both workflows can also be run manually from the GitHub Actions tab.
 - Both workflows run every 5 hours by default. GitHub cron schedules use UTC.
 
+## Why this is useful
+
+Claude Code and Codex sessions are easiest to use when they are already warm and running. If your workflow has a 5-hour session window, this repo lets you start that window on a schedule instead of waiting until the moment you sit down to code.
+
+That means you can:
+
+- kick off a session before your work block starts
+- keep a session active across the parts of the day when you are away from your desk
+- avoid burning time on manual startup when you are ready to work
+
 ## Secrets you need
 
 ### Claude
