@@ -11,48 +11,34 @@ GitHub Actions workflows for starting Claude Code or Codex sessions on a schedul
 
 ## Why this is useful
 
-Claude Code and Codex sessions are easiest to use when they are already warm and running. If your workflow has a 5-hour session window, this repo lets you start that window on a schedule instead of waiting until the moment you sit down to code.
+Claude Code and Codex sessions are easiest to use when the clock starts before you do.
 
-That means you can:
+For example, if your scheduled start times are `10:00 a.m.`, `3:00 p.m.`, and `8:00 p.m.`, then a session that begins at `10:00 a.m.` is already counting down by the time you start coding at `12:00 p.m.`. If you hit the session limit before `3:00 p.m.`, the `3:00 p.m.` start gives you a fresh window right away. Without this repo, you would not reset until `5:00 p.m.` instead.
 
-- kick off a session before your work block starts
-- keep a session active across the parts of the day when you are away from your desk
-- avoid burning time on manual startup when you are ready to work
+That is the point: you can move the session window earlier in the day so the reset happens when you need it, not only when you happen to sit down at the keyboard.
 
 ## Secrets you need
 
 ### Claude
 
-Create a repository secret named `CLAUDE_CODE_OAUTH_TOKEN` and paste in your authenticated Claude Code OAuth token.
+From the repo root, run:
+
+```bash
+CLAUDE_CODE_OAUTH_TOKEN="$(claude setup-token)"
+gh secret set CLAUDE_CODE_OAUTH_TOKEN --body "$CLAUDE_CODE_OAUTH_TOKEN"
+```
+
+`claude setup-token` prints the token to your terminal. `gh secret set` stores it in the current repository.
 
 ### Codex
 
-Create a repository secret named `CODEX_CONFIG_B64` and store a base64-encoded copy of your Codex `auth.json` there.
+From the repo root, run:
 
-To generate that Codex secret:
+```bash
+gh secret set CODEX_CONFIG_B64 --body "$(base64 "${CODEX_HOME:-$HOME/.codex}/auth.json" | tr -d '\n')"
+```
 
-1. Find the auth file in your Codex home directory:
-
-   ```bash
-   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
-   ls "$CODEX_AUTH_DIR/auth.json"
-   ```
-
-2. Base64-encode the file:
-
-   ```bash
-   # Linux
-   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
-   base64 -w0 "$CODEX_AUTH_DIR/auth.json"
-
-   # macOS
-   CODEX_AUTH_DIR="${CODEX_HOME:-$HOME/.codex}"
-   base64 -i "$CODEX_AUTH_DIR/auth.json"
-   ```
-
-3. Save the encoded output as the `CODEX_CONFIG_B64` secret.
-
-If `CODEX_HOME` is not set, Codex normally keeps `auth.json` under `~/.codex/auth.json`, which is the fallback path used above.
+If `CODEX_HOME` is not set, the command falls back to `~/.codex/auth.json`.
 
 ## Workflow files
 
