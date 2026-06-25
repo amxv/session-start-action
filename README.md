@@ -17,12 +17,21 @@ GitHub Actions workflows for starting Claude Code or Codex sessions on a schedul
 Set the matching repository variable to `true` to allow that workflow to run.
 Leave it unset or set it to anything else to disable it.
 
-To change the value in GitHub:
+From the repo root, use the GitHub CLI:
 
-1. Open the repository settings.
-2. Go to `Secrets and variables` > `Actions` > `Variables`.
-3. Create or edit `CLAUDE_SESSION_START_ENABLED` or `CODEX_SESSION_START_ENABLED`.
-4. Set the value to `true` to enable the workflow.
+```bash
+gh variable set CLAUDE_SESSION_START_ENABLED --body true
+gh variable set CODEX_SESSION_START_ENABLED --body true
+```
+
+To disable a workflow again, delete the matching variable:
+
+```bash
+gh variable delete CLAUDE_SESSION_START_ENABLED
+gh variable delete CODEX_SESSION_START_ENABLED
+```
+
+You can also set the value to something other than `true` if you want to keep the variable around but leave the workflow disabled.
 
 ## Why this is useful
 
