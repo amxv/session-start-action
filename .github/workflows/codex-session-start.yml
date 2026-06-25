@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   greet-codex:
+    if: ${{ vars.CODEX_SESSION_START_ENABLED == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

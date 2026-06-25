@@ -8,6 +8,21 @@ GitHub Actions workflows for starting Claude Code or Codex sessions on a schedul
 - `Codex Session Start` sends the same kind of prompt through Codex using a base64-encoded `auth.json` secret.
 - Both workflows can also be run manually from the GitHub Actions tab.
 - Both workflows run every 5 hours by default. GitHub cron schedules use UTC.
+- Each workflow is gated by a GitHub repository variable:
+  - `CLAUDE_SESSION_START_ENABLED`
+  - `CODEX_SESSION_START_ENABLED`
+
+## Enable or disable
+
+Set the matching repository variable to `true` to allow that workflow to run.
+Leave it unset or set it to anything else to disable it.
+
+To change the value in GitHub:
+
+1. Open the repository settings.
+2. Go to `Secrets and variables` > `Actions` > `Variables`.
+3. Create or edit `CLAUDE_SESSION_START_ENABLED` or `CODEX_SESSION_START_ENABLED`.
+4. Set the value to `true` to enable the workflow.
 
 ## Why this is useful
 
